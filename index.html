@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EduPulse - Student Performance & Assessment</title>
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f9f9f9;
+      color: #333;
+    }
+    nav {
+      background-color: #0077b6;
+      padding: 1em;
+      display: flex;
+      justify-content: center;
+      gap: 2em;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+    nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 1.1em;
+    }
+    nav a:hover {
+      text-decoration: underline;
+    }
+    .content {
+      padding: 4em 2em;
+      min-height: 80vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+    .page {
+      display: none;
+      width: 100%;
+      max-width: 1000px;
+    }
+    .page.active {
+      display: block;
+    }
+    header h1 {
+      margin-top: 0;
+      font-size: 2.5em;
+      color: #023e8a;
+    }
+    header h2 {
+      margin-top: 0.5em;
+      font-size: 1.5em;
+      color: #0077b6;
+    }
+    #searchResults {
+      margin-top: 1em;
+      text-align: left;
+    }
+    input[type="text"] {
+      padding: 0.7em;
+      width: 300px;
+      margin-top: 1em;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+    button {
+      padding: 0.7em 1em;
+      background-color: #00b4d8;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-left: 0.5em;
+    }
+    button:hover {
+      background-color: #0096c7;
+    }
+    footer {
+      text-align: center;
+      padding: 1.5em;
+      background-color: #023e8a;
+      color: white;
+      margin-top: 2em;
+    }
+    iframe {
+      border: 1px solid #ccc;
+      border-radius: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="#" onclick="showPage('home')">Home</a>
+    <a href="#" onclick="showPage('dashboard')">Dashboard</a>
+    <a href="#" onclick="showPage('search')">Search</a>
+    <a href="#" onclick="showPage('contact')">Contact</a>
+  </nav>
+
+  <div class="content">
+    <!-- Home Page -->
+    <div id="home" class="page active">
+      <header>
+        <h1>Welcome to EduPulse</h1>
+        <h2>Your Student Performance & Assessment Hub</h2>
+      </header>
+      <p>At EduPulse, we bring insights into student academic journeys, offering detailed assessment metrics and performance dashboards. 
+         Track progress, identify growth opportunities, and empower learning through data-driven evaluations. 
+         Stay ahead with our smart academic performance tracking system designed for excellence!</p>
+    </div>
+
+    <!-- Dashboard Page -->
+    <div id="dashboard" class="page">
+      <h1>Dashboard</h1>
+      <p>Below is the embedded Power BI dashboard displaying student analytics:</p>
+      <iframe 
+        width="800" 
+        height="600" 
+        src="https://app.powerbi.com/reportEmbed?reportId=YOUR_REPORT_ID&autoAuth=true&ctid=YOUR_TENANT_ID" 
+        frameborder="0" 
+        allowFullScreen="true">
+      </iframe>
+      <p style="font-size: 0.8em; color: gray;">(Replace the iframe `src` link with your Power BI dashboard.)</p>
+    </div>
+
+    <!-- Search Page -->
+    <div id="search" class="page">
+      <h1>Search Research Articles</h1>
+      <input type="text" id="searchInput" placeholder="Enter keyword...">
+      <button onclick="performSearch()">Search</button>
+      <div id="searchResults"></div>
+    </div>
+
+    <!-- Contact Page -->
+    <div id="contact" class="page">
+      <h1>Contact Us</h1>
+      <p>We'd love to hear from you! Reach us through:</p>
+      <ul style="list-style: none; padding: 0;">
+        <li><strong>Email:</strong> support@edupulse.com</li>
+        <li><strong>Phone:</strong> +1-234-567-890</li>
+        <li><strong>Address:</strong> 123 Learning Way, Knowledge City</li>
+      </ul>
+    </div>
+  </div>
+
+  <footer>
+    &copy; 2025 EduPulse - All Rights Reserved
+  </footer>
+
+  <script>
+    function showPage(pageId) {
+      var pages = document.getElementsByClassName('page');
+      for (var i = 0; i < pages.length; i++) {
+        pages[i].classList.remove('active');
+      }
+      document.getElementById(pageId).classList.add('active');
+    }
+
+    function performSearch() {
+      var query = document.getElementById('searchInput').value.toLowerCase();
+      var resultsDiv = document.getElementById('searchResults');
+
+      // Dummy search results
+      var articles = [
+        { title: "Improving Student Retention", description: "A study on engagement techniques." },
+        { title: "Assessment Strategies", description: "Modern methods for academic evaluation." },
+        { title: "Performance Analytics in Education", description: "Using data to boost results." }
+      ];
+
+      var filtered = articles.filter(a => 
+        a.title.toLowerCase().includes(query) || 
+        a.description.toLowerCase().includes(query)
+      );
+
+      resultsDiv.innerHTML = '';
+      if (filtered.length > 0) {
+        filtered.forEach(article => {
+          resultsDiv.innerHTML += `<h3>${article.title}</h3><p>${article.description}</p>`;
+        });
+      } else {
+        resultsDiv.innerHTML = "<p>No articles found.</p>";
+      }
+    }
+  </script>
+
+</body>
+</html>
